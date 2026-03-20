@@ -2,7 +2,7 @@ import { google } from 'googleapis';
 
 let connectionSettings: any;
 
-async function getAccessToken() {
+async function getAccessTokenFromReplit() {
   if (
     connectionSettings &&
     connectionSettings.settings.expires_at &&
@@ -18,17 +18,12 @@ async function getAccessToken() {
     ? 'depl ' + process.env.WEB_REPL_RENEWAL
     : null;
 
-  if (!xReplitToken) {
-    throw new Error('X-Replit-Token not found for repl/depl');
-  }
+  if (!xReplitToken) throw new Error('X-Replit-Token not found');
 
   connectionSettings = await fetch(
     'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=google-sheet',
     {
-      headers: {
-        Accept: 'application/json',
-        'X-Replit-Token': xReplitToken,
-      },
+      headers: { Accept: 'application/json', 'X-Replit-Token': xReplitToken },
     }
   )
     .then((res) => res.json())
@@ -38,15 +33,25 @@ async function getAccessToken() {
     connectionSettings?.settings?.access_token ||
     connectionSettings?.settings?.oauth?.credentials?.access_token;
 
-  if (!connectionSettings || !accessToken) {
-    throw new Error('Google Sheet not connected');
-  }
+  if (!connectionSettings || !accessToken) throw new Error('Google Sheet not connected');
   return accessToken;
 }
 
 export async function getUncachableGoogleSheetClient() {
-  const accessToken = await getAccessToken();
-  const oauth2Client = new google.auth.OAuth2();
-  oauth2Client.setCredentials({ access_token: accessToken });
-  return google.sheets({ version: 'v4', auth: oauth2Client });
+  if (process.env.REPLIT_CONNECTORS_HOSTNAME) {
+    const accessToken = await getAccessTokenFromReplit();
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
+    return google.sheets({ version: 'v4', auth: oauth2Client });
+  }
+
+  const keyJson = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+  if (!keyJson) throw new Error('GOOGLE_SERVICE_ACCOUNT_KEY env var not set');
+
+  const key = JSON.parse(keyJson);
+  const auth = new google.auth.GoogleAuth({
+    credentials: key,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+  return google.sheets({ version: 'v4', auth });
 }
