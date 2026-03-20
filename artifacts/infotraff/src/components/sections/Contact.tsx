@@ -9,18 +9,47 @@ import { useToast } from "@/hooks/use-toast";
 export function Contact() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    industry: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        throw new Error("Server error");
+      }
+
       toast({
         title: "Request received!",
         description: "Our team will reach out within 24 hours to schedule your demo.",
       });
-      (e.target as HTMLFormElement).reset();
-    }, 1500);
+      setForm({ name: "", company: "", email: "", phone: "", industry: "", message: "" });
+    } catch {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again or email us directly at info@infotraff.org",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -75,30 +104,68 @@ export function Contact() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-white">Full Name</label>
-                  <Input required placeholder="Jane Smith" className="bg-secondary/50 border-border" />
+                  <Input
+                    required
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Jane Smith"
+                    className="bg-secondary/50 border-border"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-white">Company / Organization</label>
-                  <Input required placeholder="Carrefour, Mall of Arabia..." className="bg-secondary/50 border-border" />
+                  <Input
+                    required
+                    name="company"
+                    value={form.company}
+                    onChange={handleChange}
+                    placeholder="Carrefour, Mall of Arabia..."
+                    className="bg-secondary/50 border-border"
+                  />
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-white">Work Email</label>
-                  <Input required type="email" placeholder="jane@company.com" className="bg-secondary/50 border-border" />
+                  <Input
+                    required
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="jane@company.com"
+                    className="bg-secondary/50 border-border"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-white">Phone Number</label>
-                  <Input type="tel" placeholder="+1 555 000 0000" className="bg-secondary/50 border-border" />
+                  <Input
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    placeholder="+20 10 0000 0000"
+                    className="bg-secondary/50 border-border"
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-white">Industry / Use Case</label>
-                <Input placeholder="e.g. Retail, Manufacturing, Hospitality..." className="bg-secondary/50 border-border" />
+                <Input
+                  name="industry"
+                  value={form.industry}
+                  onChange={handleChange}
+                  placeholder="e.g. Retail, Manufacturing, Hospitality..."
+                  className="bg-secondary/50 border-border"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-white">Tell Us About Your Needs</label>
                 <Textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
                   placeholder="How many cameras? What challenges are you looking to solve?"
                   className="min-h-[100px] bg-secondary/50 border-border"
                 />

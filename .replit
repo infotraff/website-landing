@@ -19,7 +19,7 @@ env = { "CI" = "true" }
 [agent]
 stack = "PNPM_WORKSPACE"
 expertMode = true
-integrations = ["google-sheet:1.0.0"]
+integrations = ["google-sheet:1.0.0", "resend:1.0.0"]
 
 [postMerge]
 path = "scripts/post-merge.sh"
@@ -27,3 +27,9 @@ timeoutMs = 20000
 
 [nix]
 channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+CONTACT_SPREADSHEET_ID = "1NQfmIO1kvfRnJVzFD7s7pkcdf6lluRb2pF9kQS6uGxI"
+CONTACT_NOTIFY_EMAIL = "info@infotraff.org"
