@@ -1,0 +1,18 @@
+packages:
+  "framer-motion": "For smooth page transitions, entry animations, and interactive component states"
+  "clsx": "For conditional class names"
+  "tailwind-merge": "For merging tailwind classes safely"
+  "lucide-react": "For beautiful consistent icons"
+
+images:
+  - path: "artifacts/infotraff/public/images/hero-bg.png"
+    description: "Dark abstract technological network map with glowing blue and orange nodes, data lines, deep cinematic lighting, professional intelligence platform aesthetic"
+    aspect_ratio: "16:9"
+  - path: "artifacts/infotraff/public/images/map-peru-bg.png"
+    description: "Stylized dark minimal geographic map of Peru, subtle glowing edges, digital dashboard style, deep navy blue background, tech aesthetic"
+    aspect_ratio: "16:9"
+
+notes:
+  - The application is a static, mock-data driven frontend as requested.
+  - No backend API integration is required.
+  - All interactive elements contain state and handle simulated interactions.
