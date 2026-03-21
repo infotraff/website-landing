@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ShoppingCart, Map, Star, AlertCircle, Bell, Clock,
@@ -28,7 +28,7 @@ const industries: {
     tabIcon: Cog,
     colorRaw: "#fbbf24",
     badge: "MANUFACTURING",
-    image: "detection-factory-ppe.png",
+    image: "detection-factory-ppe.webp",
     video: "hero-demo.mp4",
     headline: "Safety Enforcement and Quality Control, Automated",
     description: "Detect violations before injuries happen, track production throughput, and maintain compliance, all from your existing camera network, around the clock.",
@@ -47,7 +47,7 @@ const industries: {
     tabIcon: ShoppingCart,
     colorRaw: "#22c55e",
     badge: "RETAIL",
-    image: "detection-retail-heatmap.png",
+    image: "detection-retail-heatmap.webp",
     video: null,
     headline: "Turn Every Visit Into Actionable Intelligence",
     description: "Your existing cameras become a full retail analytics platform, foot traffic, service gaps, loss prevention, and VIP recognition, without storing a single identity.",
@@ -66,7 +66,7 @@ const industries: {
     tabIcon: Package,
     colorRaw: "#60a5fa",
     badge: "WAREHOUSE",
-    image: "detection-warehouse.jpg",
+    image: "detection-warehouse.webp",
     video: null,
     headline: "Full Operational Visibility Across Every Dock",
     description: "From loading bay to storage floor, track vehicles, shipments, staff compliance, and security in one unified command centre.",
@@ -85,7 +85,7 @@ const industries: {
     tabIcon: UtensilsCrossed,
     colorRaw: "#f97316",
     badge: "F & B",
-    image: "detection-fb-tables.png",
+    image: "detection-fb-tables.webp",
     video: null,
     headline: "Smarter Service, Fewer Complaints",
     description: "Monitor every table and service interaction in real time, reduce wait times, enforce hygiene standards, and maximise covers without adding staff.",
@@ -104,7 +104,7 @@ const industries: {
     tabIcon: Store,
     colorRaw: "#06b6d4",
     badge: "SUPERMARKET",
-    image: "detection-supermarket-stock.png",
+    image: "detection-supermarket-stock.webp",
     video: null,
     headline: "Store Intelligence From Every Aisle",
     description: "Track shelf availability, shopper behaviour, and checkout performance in real time, turning your existing cameras into a full retail intelligence system.",
@@ -122,6 +122,14 @@ const industries: {
 export function Detections() {
   const [active, setActive] = useState(0);
   const ind = industries[active];
+
+  // Preload all industry images so tab switching is instant
+  useEffect(() => {
+    industries.forEach(({ image }) => {
+      const img = new Image();
+      img.src = `${import.meta.env.BASE_URL}images/${image}`;
+    });
+  }, []);
 
   return (
     <section id="detections" className="py-14 md:py-28 bg-background relative overflow-hidden">
