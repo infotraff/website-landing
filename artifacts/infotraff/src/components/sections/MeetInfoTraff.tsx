@@ -18,7 +18,7 @@ function ReasonVisual() {
         {/* Camera feed, detect-queue.png already has baked-in AI overlays; no CSS boxes added */}
         <div className="relative overflow-hidden flex-shrink-0 bg-[#07090f]" style={{ width: "60%" }}>
           <img
-            src={`${import.meta.env.BASE_URL}images/detect-queue-fb.jpg`}
+            src={`${import.meta.env.BASE_URL}images/detect-queue-fb.webp`}
             alt="Queue detection camera feed"
             className="w-full h-full object-cover"
             style={{ objectPosition: "25% center", transform: "scale(1.04)", transformOrigin: "center" }}

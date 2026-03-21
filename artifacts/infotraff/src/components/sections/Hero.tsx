@@ -42,7 +42,7 @@ export function Hero() {
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
-          src={`${import.meta.env.BASE_URL}images/hero-bg.png`}
+          src={`${import.meta.env.BASE_URL}images/hero-bg.webp`}
           alt="AI Camera Network"
           className="w-full h-full object-cover opacity-25"
         />
@@ -143,7 +143,7 @@ export function Hero() {
                 <span className="text-white text-[11px] font-bold tracking-wide">LIVE AI DETECTIONS</span>
               </div>
               <img
-                src={`${import.meta.env.BASE_URL}images/hero-detections-grid.jpg`}
+                src={`${import.meta.env.BASE_URL}images/hero-detections-grid.webp`}
                 alt="InfoTraff AI Detections"
                 className="w-full object-cover object-top rounded-2xl"
                 style={{ aspectRatio: "1 / 0.75", display: "block" }}
