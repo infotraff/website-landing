@@ -8,17 +8,41 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-async function getSheetsClient() {
-  let keyJson = (process.env.GOOGLE_SERVICE_ACCOUNT_KEY || '').trim();
-  if (!keyJson) throw new Error('GOOGLE_SERVICE_ACCOUNT_KEY not set');
-  // Strip surrounding quotes if pasted with them in Vercel UI
-  if (keyJson.startsWith('"') && keyJson.endsWith('"')) {
-    keyJson = keyJson.slice(1, -1).replace(/\\"/g, '"');
+function fixServiceAccountJson(raw) {
+  let s = raw.trim().replace(/^\uFEFF/, ''); // trim + strip BOM
+  // Strip surrounding quotes if the value was pasted with them
+  if (s.startsWith('"') && s.endsWith('"')) {
+    s = s.slice(1, -1).replace(/\\"/g, '"');
   }
-  // Unescape any double-escaped characters from env var storage
-  keyJson = keyJson.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
-  const key = JSON.parse(keyJson);
-  key.private_key = key.private_key.replace(/\\n/g, '\n');
+  // First attempt: parse as-is
+  try { return JSON.parse(s); } catch (_) {}
+  // Second attempt: escape literal control characters inside JSON string values.
+  // Vercel sometimes stores \n in env vars as real newline bytes, making the JSON invalid.
+  let fixed = '';
+  let inString = false;
+  let escaped = false;
+  for (const ch of s) {
+    if (escaped) { fixed += ch; escaped = false; continue; }
+    if (ch === '\\' && inString) { fixed += ch; escaped = true; continue; }
+    if (ch === '"') { fixed += ch; inString = !inString; continue; }
+    if (inString) {
+      if (ch === '\n') { fixed += '\\n'; continue; }
+      if (ch === '\r') { fixed += '\\r'; continue; }
+      if (ch === '\t') { fixed += '\\t'; continue; }
+    }
+    fixed += ch;
+  }
+  return JSON.parse(fixed);
+}
+
+async function getSheetsClient() {
+  const keyJson = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+  if (!keyJson) throw new Error('GOOGLE_SERVICE_ACCOUNT_KEY not set');
+  const key = fixServiceAccountJson(keyJson);
+  // Ensure private_key has real newlines (not escape sequences)
+  if (key.private_key) {
+    key.private_key = key.private_key.replace(/\\n/g, '\n');
+  }
   const auth = new google.auth.GoogleAuth({
     credentials: key,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
