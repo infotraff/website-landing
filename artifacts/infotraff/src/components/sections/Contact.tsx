@@ -26,8 +26,7 @@ export function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const apiBase = import.meta.env.VITE_API_URL ?? "";
-      const res = await fetch(`${apiBase}/api/contact`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
