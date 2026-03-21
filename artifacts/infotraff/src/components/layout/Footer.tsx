@@ -34,7 +34,7 @@ export function Footer() {
               {[
                 { label: "AI Detections", href: "#detections" },
                 { label: "ShopTalk AI", href: "#shoptalk" },
-                { label: "Solutions", href: "#solutions" },
+                { label: "Solutions", href: "#detections" },
                 { label: "FAQ", href: "#faq" },
               ].map(item => (
                 <li key={item.label}><a href={item.href} className="text-muted-foreground hover:text-primary transition-colors">{item.label}</a></li>
