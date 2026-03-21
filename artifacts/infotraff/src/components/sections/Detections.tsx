@@ -236,8 +236,13 @@ export function Detections() {
                     <source src={`${import.meta.env.BASE_URL}images/${ind.video}`} type="video/mp4" />
                   </video>
                 ) : (
-                  <img src={`${import.meta.env.BASE_URL}images/${ind.image}`} alt={ind.label}
-                    className="w-full aspect-video object-cover" />
+                  <img
+                    src={`${import.meta.env.BASE_URL}images/${ind.image}`}
+                    alt={ind.label}
+                    className="w-full aspect-video object-cover"
+                    fetchPriority={active === 0 ? "high" : "auto"}
+                    loading={active === 0 ? "eager" : "lazy"}
+                  />
                 )}
                 {/* Detection overlays (e.g. F&B table boxes) */}
                 {ind.overlays && ind.overlays.map((ov, oi) => (
