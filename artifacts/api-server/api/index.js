@@ -9,8 +9,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 async function getSheetsClient() {
-  const keyJson = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+  let keyJson = (process.env.GOOGLE_SERVICE_ACCOUNT_KEY || '').trim();
   if (!keyJson) throw new Error('GOOGLE_SERVICE_ACCOUNT_KEY not set');
+  // Strip surrounding quotes if pasted with them in Vercel UI
+  if (keyJson.startsWith('"') && keyJson.endsWith('"')) {
+    keyJson = keyJson.slice(1, -1).replace(/\\"/g, '"');
+  }
+  // Unescape any double-escaped characters from env var storage
+  keyJson = keyJson.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
   const key = JSON.parse(keyJson);
   key.private_key = key.private_key.replace(/\\n/g, '\n');
   const auth = new google.auth.GoogleAuth({
