@@ -28,6 +28,10 @@ function getResendClient() {
   };
 }
 
+app.get('/', (_req, res) => {
+  res.json({ status: 'ok', service: 'InfoTraff API' });
+});
+
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
