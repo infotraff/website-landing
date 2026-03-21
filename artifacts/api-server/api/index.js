@@ -12,6 +12,7 @@ async function getSheetsClient() {
   const keyJson = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
   if (!keyJson) throw new Error('GOOGLE_SERVICE_ACCOUNT_KEY not set');
   const key = JSON.parse(keyJson);
+  key.private_key = key.private_key.replace(/\\n/g, '\n');
   const auth = new google.auth.GoogleAuth({
     credentials: key,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
