@@ -33,3 +33,4 @@ channel = "stable-25_05"
 [userenv.shared]
 CONTACT_SPREADSHEET_ID = "1NQfmIO1kvfRnJVzFD7s7pkcdf6lluRb2pF9kQS6uGxI"
 CONTACT_NOTIFY_EMAIL = "info@infotraff.org"
+Github = "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"
