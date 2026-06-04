@@ -96,6 +96,23 @@
     }
     </script>
 
+    <!-- JSON-LD: SiteNavigation — tells Google the correct section URLs -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "InfoTraff Site Navigation",
+      "itemListElement": [
+        { "@type": "SiteLinksSearchBox", "url": "https://infotraff.org" },
+        { "@type": "ListItem", "position": 1, "name": "AI Detections", "url": "https://infotraff.org/#detections" },
+        { "@type": "ListItem", "position": 2, "name": "ShopTalk AI Search", "url": "https://infotraff.org/#shoptalk" },
+        { "@type": "ListItem", "position": 3, "name": "Client Projects", "url": "https://infotraff.org/#projects" },
+        { "@type": "ListItem", "position": 4, "name": "FAQ", "url": "https://infotraff.org/#faq" },
+        { "@type": "ListItem", "position": 5, "name": "Contact & Demo", "url": "https://infotraff.org/#contact" }
+      ]
+    }
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
