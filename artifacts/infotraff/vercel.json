@@ -1,7 +1,13 @@
 {
   "redirects": [
     { "source": "/favicon.ico", "destination": "/favicon.svg", "permanent": true },
-    { "source": "/favicon.png", "destination": "/favicon.svg", "permanent": true }
+    { "source": "/favicon.png", "destination": "/favicon.svg", "permanent": true },
+    { "source": "/copy-of-product", "destination": "/", "permanent": true },
+    { "source": "/about", "destination": "/", "permanent": true },
+    { "source": "/admin", "destination": "/", "permanent": true },
+    { "source": "/about-1", "destination": "/", "permanent": true },
+    { "source": "/contact-9", "destination": "/", "permanent": true },
+    { "source": "/blog", "destination": "/", "permanent": true }
   ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
