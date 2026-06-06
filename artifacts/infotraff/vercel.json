@@ -7,7 +7,9 @@
     { "source": "/admin", "destination": "/", "permanent": true },
     { "source": "/about-1", "destination": "/", "permanent": true },
     { "source": "/contact-9", "destination": "/", "permanent": true },
-    { "source": "/blog", "destination": "/", "permanent": true }
+    { "source": "/blog", "destination": "/", "permanent": true },
+    { "source": "/privacy-policy", "destination": "/", "permanent": true },
+    { "source": "/privacy-policy/(.*)", "destination": "/", "permanent": true }
   ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
