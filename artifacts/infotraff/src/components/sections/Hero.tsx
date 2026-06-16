@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck, Zap, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const WORDS = ["Retail", "Manufacturing", "Supermarkets", "F&B", "Warehouses"];
+const WORDS = ["Retail", "Manufacturing", "Supermarkets", "F&B", "Warehouses", "Pizza"];
 
 function TypewriterWords() {
   const [wordIndex, setWordIndex] = useState(0);
@@ -28,10 +28,12 @@ function TypewriterWords() {
     return () => clearTimeout(timeout);
   }, [displayed, deleting, wordIndex]);
 
+  const isPizza = WORDS[wordIndex] === "Pizza";
+
   return (
-    <span className="text-gradient">
+    <span className={isPizza ? "text-orange-400" : "text-gradient"}>
       {displayed}
-      <span className="cursor-blink text-primary ml-0.5">|</span>
+      <span className={`cursor-blink ml-0.5 ${isPizza ? "text-orange-400" : "text-primary"}`}>|</span>
     </span>
   );
 }
@@ -102,7 +104,7 @@ export function Hero() {
               className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-xl"
             >
               Real-time alerts & insights from your{" "}
-              <strong className="text-white">existing CCTV cameras</strong> via our AI edge device, no new cameras required.
+              <strong className="text-white">existing CCTV cameras</strong>, no new cameras required.
             </motion.p>
 
             <motion.div
