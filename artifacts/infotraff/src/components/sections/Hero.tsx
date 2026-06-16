@@ -104,7 +104,7 @@ export function Hero() {
               className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-xl"
             >
               Real-time alerts & insights from your{" "}
-              <strong className="text-white">existing CCTV cameras</strong>, no new cameras required.
+              <strong className="text-white">existing CCTV cameras</strong> via our AI, no new cameras required.
             </motion.p>
 
             <motion.div
