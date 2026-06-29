@@ -59,7 +59,15 @@ export function Footer() {
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <span>MENA, North America</span>
+                <span>MENA Region</span>
+              </li>
+              <li className="flex items-start gap-3 text-muted-foreground">
+                <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <span>Canada</span>
+              </li>
+              <li className="flex items-start gap-3 text-muted-foreground">
+                <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <span>Tarragona, Spain</span>
               </li>
               <li className="flex items-center gap-3 text-muted-foreground">
                 <Mail className="w-4 h-4 text-primary shrink-0" />
